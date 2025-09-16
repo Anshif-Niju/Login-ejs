@@ -2,16 +2,12 @@ const express=require("express")
 const app=express()
 const session=require("express-session")
 const nocache=require("nocache")
-const mongoStore=require("connect-mongo")
 
 //session handling
 app.use(session({
     secret:"cat",
     resave:false,
     saveUninitialized:true,
-    store:mongoStore.create({
-        mongoUrl:'mongodb://localhost/session-db'
-    })
 }))
 
 
@@ -68,8 +64,6 @@ app.post("/logout",(req,res)=>{
     req.session.destroy();
     res.redirect("/")
 })
-
-
 
 
 
