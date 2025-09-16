@@ -16,6 +16,9 @@ app.use(session({
 app.use(express.static("public"))
 
 
+//nocache
+app.use(nocache())
+
 //Middleware parsing data
 app.use(express.urlencoded({extended:false}))
 
@@ -33,7 +36,7 @@ app.get("/",(req,res)=>{
     if(req.session.user){
         res.render("Home",{user:req.session.name})
     }else{
-    res.render("Login",{message:""})    
+    res.render("Login",{message:req.session.error||""})    
     }
 })
 
@@ -41,29 +44,27 @@ app.get("/",(req,res)=>{
 
 app.post("/Login",(req,res)=>{
 
-    const {userName,id,password}=req.body;
+    const {id,password}=req.body;
 
-    const user=userName.toUpperCase();
+    if(id==Name && password==pass){
 
-    req.session.user=user;
-
-    if(id==Name &&password==pass){
+    req.session.user=id;
     
-    req.session.name=req.body.id
+    req.session.name=req.body.userName.toUpperCase()
         
-    res.render("Home",{user})
+    res.redirect("/")
     }else{
-    res.render("Login",{message:"Invalid Credintial"})
+        req.session.error="Invalid Credintial"
+    res.redirect("/")
     }
 
 })
 
 
-
-app.get("/Login",(req,res)=>{
-    res.render("index",Name)    
+app.post("/logout",(req,res)=>{
+    req.session.destroy();
+    res.redirect("/")
 })
-
 
 
 
