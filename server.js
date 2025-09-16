@@ -71,20 +71,8 @@ app.post("/logout",(req,res)=>{
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 const PORT=process.env.PORT || 3333
 
 app.listen(PORT,()=>{
-    console.log("Server Listen on 3333...")
+    console.log("Server Running on",PORT)
 })
