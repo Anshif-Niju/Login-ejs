@@ -8,7 +8,7 @@ const mongoStore=require("connect-mongo")
 app.use(session({
     secret:"cat",
     resave:false,
-    saveUnintialized:true,
+    saveUninitialized:true,
     store:mongoStore.create({
         mongoUrl:'mongodb://localhost/session-db'
     })
