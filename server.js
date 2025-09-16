@@ -8,6 +8,7 @@ app.use(session({
     secret:"cat",
     resave:false,
     saveUninitialized:true,
+    cookie:{maxAge:180000}
 }))
 
 
