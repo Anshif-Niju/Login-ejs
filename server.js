@@ -2,13 +2,16 @@ const express=require("express")
 const app=express()
 const session=require("express-session")
 const nocache=require("nocache")
-
+const mongoStore=require("connect-mongo")
 
 //session handling
 app.use(session({
     secret:"cat",
     resave:false,
-    saveUnintialized:true
+    saveUnintialized:true,
+    store:mongoStore.create({
+        mongoUrl:'mongodb://localhost/session-db'
+    })
 }))
 
 
@@ -34,7 +37,7 @@ const pass="369"
 
 app.get("/",(req,res)=>{
     if(req.session.user){
-        res.render("Home",{user:req.session.name})
+        res.render("Home",{user:req.session.name||""})
     }else{
     res.render("Login",{message:req.session.error||""})    
     }
